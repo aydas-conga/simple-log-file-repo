@@ -1,0 +1,25 @@
+name: Log File Contents on Push
+
+on:
+  push:
+    paths:
+      - '**/*'  # Monitor all files in the repository
+
+jobs:
+  log-file-contents:
+    runs-on: ubuntu-latest  # This will run the job on the latest Ubuntu runner
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Log the contents of all files in the repo
+      - name: Log file contents
+        run: |
+          echo "Files in the repository:"
+          for file in $(find . -type f); do
+            echo "Contents of $file:"
+            cat $file
+            echo "---------------------------"
+          done
